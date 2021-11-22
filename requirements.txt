@@ -1,0 +1,2 @@
+pyodbc==4.0.32
+robotframework==4.1.2

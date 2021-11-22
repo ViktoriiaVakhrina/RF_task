@@ -1,0 +1,840 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<robot generator="Robot 4.0.3 (Python 3.8.10 on win32)" generated="20211114 11:40:20.536" rpa="false" schemaversion="2">
+<suite id="s1" name="Tests" source="C:\Users\Viktoriia_Vakhrina\PycharmProjects\RF_task\Tests\tests.robot">
+<kw name="Create new user" library="common_keywords" type="SETUP">
+<doc>Creates new login and user in database and connects as new user
+| All connection parameters and credentials for new user can be changed in file variables.py</doc>
+<kw name="Connect To Database Using Custom Params" library="DatabaseLibrary">
+<arg>pyodbc</arg>
+<arg>${CONNECTION_STRING}</arg>
+<doc>Loads the DB API 2.0 module given `dbapiModuleName` then uses it to
+connect to the database using the map string `db_custom_param_string`.</doc>
+<msg timestamp="20211114 11:40:20.592" level="INFO">Executing : Connect To Database Using Custom Params : pyodbc.connect(db_api_2.connect(Driver='{ODBC Driver 17 for SQL Server}',Server='localhost',Database='AdventureWorks2012',Trusted_Connection='yes',UID='',PWD='')) </msg>
+<status status="PASS" starttime="20211114 11:40:20.589" endtime="20211114 11:40:20.619"/>
+</kw>
+<kw name="Execute Sql String" library="DatabaseLibrary">
+<arg>CREATE LOGIN ${TEST_LOGIN} WITH PASSWORD = '${TEST_USER_PASSWORD}'</arg>
+<doc>Executes the sqlString as SQL commands. Useful to pass arguments to your sql. Set optional input `sansTran` to
+True to run command without an explicit transaction commit or rollback.</doc>
+<msg timestamp="20211114 11:40:20.620" level="INFO">Executing : Execute SQL String  |  CREATE LOGIN TestLogin13 WITH PASSWORD = 'Password1' </msg>
+<status status="PASS" starttime="20211114 11:40:20.619" endtime="20211114 11:40:20.621"/>
+</kw>
+<kw name="Execute Sql String" library="DatabaseLibrary">
+<arg>USE AdventureWorks2012</arg>
+<doc>Executes the sqlString as SQL commands. Useful to pass arguments to your sql. Set optional input `sansTran` to
+True to run command without an explicit transaction commit or rollback.</doc>
+<msg timestamp="20211114 11:40:20.621" level="INFO">Executing : Execute SQL String  |  USE AdventureWorks2012 </msg>
+<status status="PASS" starttime="20211114 11:40:20.621" endtime="20211114 11:40:20.621"/>
+</kw>
+<kw name="Execute Sql String" library="DatabaseLibrary">
+<arg>CREATE USER ${TEST_USER_NAME} FOR LOGIN ${TEST_LOGIN}</arg>
+<doc>Executes the sqlString as SQL commands. Useful to pass arguments to your sql. Set optional input `sansTran` to
+True to run command without an explicit transaction commit or rollback.</doc>
+<msg timestamp="20211114 11:40:20.622" level="INFO">Executing : Execute SQL String  |  CREATE USER TestUser13 FOR LOGIN TestLogin13 </msg>
+<status status="PASS" starttime="20211114 11:40:20.622" endtime="20211114 11:40:20.622"/>
+</kw>
+<kw name="Execute Sql String" library="DatabaseLibrary">
+<arg>ALTER ROLE db_datawriter ADD MEMBER ${TEST_USER_NAME}</arg>
+<doc>Executes the sqlString as SQL commands. Useful to pass arguments to your sql. Set optional input `sansTran` to
+True to run command without an explicit transaction commit or rollback.</doc>
+<msg timestamp="20211114 11:40:20.623" level="INFO">Executing : Execute SQL String  |  ALTER ROLE db_datawriter ADD MEMBER TestUser13 </msg>
+<status status="PASS" starttime="20211114 11:40:20.622" endtime="20211114 11:40:20.623"/>
+</kw>
+<kw name="Execute Sql String" library="DatabaseLibrary">
+<arg>ALTER ROLE db_datareader ADD MEMBER ${TEST_USER_NAME}</arg>
+<doc>Executes the sqlString as SQL commands. Useful to pass arguments to your sql. Set optional input `sansTran` to
+True to run command without an explicit transaction commit or rollback.</doc>
+<msg timestamp="20211114 11:40:20.623" level="INFO">Executing : Execute SQL String  |  ALTER ROLE db_datareader ADD MEMBER TestUser13 </msg>
+<status status="PASS" starttime="20211114 11:40:20.623" endtime="20211114 11:40:20.624"/>
+</kw>
+<kw name="Run And Return Rc" library="OperatingSystem">
+<var>${rc}</var>
+<arg>NET STOP MSSQLSERVER</arg>
+<doc>Runs the given command in the system and returns the return code.</doc>
+<msg timestamp="20211114 11:40:20.627" level="INFO">Running command 'NET STOP MSSQLSERVER 2&gt;&amp;1'.</msg>
+<msg timestamp="20211114 11:40:20.649" level="INFO">${rc} = 2</msg>
+<status status="PASS" starttime="20211114 11:40:20.624" endtime="20211114 11:40:20.649"/>
+</kw>
+<kw name="Log To Console" library="BuiltIn">
+<arg>${rc}</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" starttime="20211114 11:40:20.650" endtime="20211114 11:40:20.650"/>
+</kw>
+<kw name="Run And Return Rc" library="OperatingSystem">
+<var>${rc}</var>
+<arg>NET START MSSQLSERVER</arg>
+<doc>Runs the given command in the system and returns the return code.</doc>
+<msg timestamp="20211114 11:40:20.652" level="INFO">Running command 'NET START MSSQLSERVER 2&gt;&amp;1'.</msg>
+<msg timestamp="20211114 11:40:20.672" level="INFO">${rc} = 2</msg>
+<status status="PASS" starttime="20211114 11:40:20.650" endtime="20211114 11:40:20.672"/>
+</kw>
+<kw name="Log To Console" library="BuiltIn">
+<arg>${rc}</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" starttime="20211114 11:40:20.672" endtime="20211114 11:40:20.672"/>
+</kw>
+<kw name="Connect To Database Using Custom Params" library="DatabaseLibrary">
+<arg>pyodbc</arg>
+<arg>${TEST_CONNECTION_STRING}</arg>
+<doc>Loads the DB API 2.0 module given `dbapiModuleName` then uses it to
+connect to the database using the map string `db_custom_param_string`.</doc>
+<msg timestamp="20211114 11:40:20.673" level="INFO">Executing : Connect To Database Using Custom Params : pyodbc.connect(db_api_2.connect(Driver='{ODBC Driver 17 for SQL Server}',Server='localhost',Database='AdventureWorks2012',Trusted_Connection='no',UID='TestLogin13',PWD='Password1')) </msg>
+<status status="PASS" starttime="20211114 11:40:20.672" endtime="20211114 11:40:20.676"/>
+</kw>
+<status status="PASS" starttime="20211114 11:40:20.589" endtime="20211114 11:40:20.676"/>
+</kw>
+<test id="s1-t1" name="Check Person.Address.StateProvinceID Foreign Key Constraint for consistency">
+<kw name="Row Count Is Equal To X" library="DatabaseLibrary">
+<arg>SELECT AddressID FROM Person.Address WHERE NOT EXISTS (SELECT * FROM Person.StateProvince WHERE StateProvinceID = Person.Address.StateProvinceID)</arg>
+<arg>0</arg>
+<doc>Check if the number of rows returned from `selectStatement` is equal to the value submitted. If not, then this
+will throw an AssertionError. Set optional input `sansTran` to True to run command without an explicit
+transaction commit or rollback.</doc>
+<msg timestamp="20211114 11:40:20.677" level="INFO">Executing : Row Count Is Equal To X  |  SELECT AddressID FROM Person.Address WHERE NOT EXISTS (SELECT * FROM Person.StateProvince WHERE StateProvinceID = Person.Address.StateProvinceID)  |  0 </msg>
+<msg timestamp="20211114 11:40:20.677" level="INFO">Executing : Row Count  |  SELECT AddressID FROM Person.Address WHERE NOT EXISTS (SELECT * FROM Person.StateProvince WHERE StateProvinceID = Person.Address.StateProvinceID) </msg>
+<status status="PASS" starttime="20211114 11:40:20.677" endtime="20211114 11:40:20.679"/>
+</kw>
+<doc>| Check consistency of Foreign Key column
+| Person.Address.StateProvinceID is Foreign key to Person.StateProvince.StateProvinceID
+|
+| * Test Steps *
+| 1. Select rows from Person.Address that have 'StateProvinceID' values
+| that not exist in Person.StateProvince.StateProvinceID
+| 2. Count number of rows returned
+|
+| * Expected result *
+| 1. Number of rows returned by query is 0</doc>
+<tag>AUTO-1.1, Person, Person.Address</tag>
+<status status="PASS" starttime="20211114 11:40:20.676" endtime="20211114 11:40:20.679"/>
+</test>
+<test id="s1-t2" name="Check for empty SpatialAddress">
+<kw name="Query" library="DatabaseLibrary">
+<var>@{res}</var>
+<arg>SELECT COUNT(*) FROM Person.Address WHERE SpatialLocation.STIsEmpty() = 1</arg>
+<doc>Uses the input `selectStatement` to query for the values that will be returned as a list of tuples. Set optional
+input `sansTran` to True to run command without an explicit transaction commit or rollback.
+Set optional input `returnAsDict` to True to return values as a list of dictionaries.</doc>
+<msg timestamp="20211114 11:40:20.680" level="INFO">Executing : Query  |  SELECT COUNT(*) FROM Person.Address WHERE SpatialLocation.STIsEmpty() = 1 </msg>
+<msg timestamp="20211114 11:40:20.752" level="INFO">@{res} = [ (0, ) ]</msg>
+<status status="PASS" starttime="20211114 11:40:20.680" endtime="20211114 11:40:20.752"/>
+</kw>
+<kw name="Should Be Equal As Integers" library="BuiltIn">
+<arg>${res[0][0]}</arg>
+<arg>0</arg>
+<doc>Fails if objects are unequal after converting them to integers.</doc>
+<msg timestamp="20211114 11:40:20.752" level="INFO">Argument types are:
+&lt;class 'int'&gt;
+&lt;type 'unicode'&gt;</msg>
+<status status="PASS" starttime="20211114 11:40:20.752" endtime="20211114 11:40:20.752"/>
+</kw>
+<doc>Check SpatialLocation column for emtpy values
+|
+| * Test Steps *
+| 1. Get rows from Person.Address where SpatialLocation is empty using .STIsEmpty() function
+|
+| * Expected results *
+| 1. Number of returned rows = 0</doc>
+<tag>AUTO-1.2, Person, Person.Address</tag>
+<status status="PASS" starttime="20211114 11:40:20.679" endtime="20211114 11:40:20.754"/>
+</test>
+<test id="s1-t3" name="Checking that Production.Document table exists">
+<kw name="Row Count Is Equal To X" library="DatabaseLibrary">
+<arg>SELECT * from INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA = 'Production' AND TABLE_NAME = 'Document'</arg>
+<arg>1</arg>
+<doc>Check if the number of rows returned from `selectStatement` is equal to the value submitted. If not, then this
+will throw an AssertionError. Set optional input `sansTran` to True to run command without an explicit
+transaction commit or rollback.</doc>
+<msg timestamp="20211114 11:40:20.755" level="INFO">Executing : Row Count Is Equal To X  |  SELECT * from INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA = 'Production' AND TABLE_NAME = 'Document'  |  1 </msg>
+<msg timestamp="20211114 11:40:20.755" level="INFO">Executing : Row Count  |  SELECT * from INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA = 'Production' AND TABLE_NAME = 'Document' </msg>
+<status status="PASS" starttime="20211114 11:40:20.755" endtime="20211114 11:40:20.756"/>
+</kw>
+<doc>Check that table 'Production.Document' exists in the database
+| * Test Steps *
+| 1. Get records from INFORMATION_SCHEMA with TABLE_SCHEMA = 'Production' and TABLE_NAME = 'Document'
+|
+| * Expected results *
+| 1. One record is returned</doc>
+<tag>AUTO 2.1, Production, Production.Document</tag>
+<status status="PASS" starttime="20211114 11:40:20.754" endtime="20211114 11:40:20.757"/>
+</test>
+<test id="s1-t4" name="Checking default constraint for columns 'ChangeNumber' and 'FolderFlag' in Production.Document table">
+<kw name="Query" library="DatabaseLibrary">
+<var>@{id}</var>
+<arg>SELECT TOP(1) BusinessEntityID FROM HumanResources.Employee</arg>
+<doc>Uses the input `selectStatement` to query for the values that will be returned as a list of tuples. Set optional
+input `sansTran` to True to run command without an explicit transaction commit or rollback.
+Set optional input `returnAsDict` to True to return values as a list of dictionaries.</doc>
+<msg timestamp="20211114 11:40:20.758" level="INFO">Executing : Query  |  SELECT TOP(1) BusinessEntityID FROM HumanResources.Employee </msg>
+<msg timestamp="20211114 11:40:20.758" level="INFO">@{id} = [ (263, ) ]</msg>
+<status status="PASS" starttime="20211114 11:40:20.758" endtime="20211114 11:40:20.758"/>
+</kw>
+<kw name="Execute Sql String" library="DatabaseLibrary">
+<arg>INSERT INTO Production.Document(DocumentNode, Title, Owner, FileName, FileExtension, Revision, Status) VALUES ('/4/0/','Test3',${id[0][0]},'Test','.doc',0,2)</arg>
+<doc>Executes the sqlString as SQL commands. Useful to pass arguments to your sql. Set optional input `sansTran` to
+True to run command without an explicit transaction commit or rollback.</doc>
+<msg timestamp="20211114 11:40:20.758" level="INFO">Executing : Execute SQL String  |  INSERT INTO Production.Document(DocumentNode, Title, Owner, FileName, FileExtension, Revision, Status) VALUES ('/4/0/','Test3',263,'Test','.doc',0,2) </msg>
+<status status="PASS" starttime="20211114 11:40:20.758" endtime="20211114 11:40:20.760"/>
+</kw>
+<kw name="Query" library="DatabaseLibrary">
+<var>@{result}</var>
+<arg>SELECT ChangeNumber, FolderFlag FROM Production.Document WHERE DocumentNode.ToString()='/4/0/'</arg>
+<doc>Uses the input `selectStatement` to query for the values that will be returned as a list of tuples. Set optional
+input `sansTran` to True to run command without an explicit transaction commit or rollback.
+Set optional input `returnAsDict` to True to return values as a list of dictionaries.</doc>
+<msg timestamp="20211114 11:40:20.760" level="INFO">Executing : Query  |  SELECT ChangeNumber, FolderFlag FROM Production.Document WHERE DocumentNode.ToString()='/4/0/' </msg>
+<msg timestamp="20211114 11:40:20.760" level="INFO">@{result} = [ (0, False) ]</msg>
+<status status="PASS" starttime="20211114 11:40:20.760" endtime="20211114 11:40:20.760"/>
+</kw>
+<kw name="Should Be Equal As Strings" library="BuiltIn">
+<arg>${result}</arg>
+<arg>[(0, False)]</arg>
+<doc>Fails if objects are unequal after converting them to strings.</doc>
+<msg timestamp="20211114 11:40:20.761" level="INFO">Argument types are:
+&lt;class 'list'&gt;
+&lt;type 'unicode'&gt;</msg>
+<status status="PASS" starttime="20211114 11:40:20.760" endtime="20211114 11:40:20.761"/>
+</kw>
+<kw name="Execute Sql String" library="DatabaseLibrary" type="TEARDOWN">
+<arg>DELETE FROM Production.Document WHERE DocumentNode.ToString() = '/4/0/'</arg>
+<doc>Executes the sqlString as SQL commands. Useful to pass arguments to your sql. Set optional input `sansTran` to
+True to run command without an explicit transaction commit or rollback.</doc>
+<msg timestamp="20211114 11:40:20.761" level="INFO">Executing : Execute SQL String  |  DELETE FROM Production.Document WHERE DocumentNode.ToString() = '/4/0/' </msg>
+<status status="PASS" starttime="20211114 11:40:20.761" endtime="20211114 11:40:20.762"/>
+</kw>
+<doc>Checking that default values are inserted into 'ChangeNumber' and 'FolderFlag'
+| when no other value is specified.
+| The default value for 'ChangeNumber' column is 0
+| The default value for 'FolderFlag' column is False
+|
+| * Test steps*
+| 1. Get existing BusinessEntityID from HumanResources.Employee to satisfy Foreign Key
+| constraint of 'Owner' column in Production.Document table
+| 2. Insert the following values in Production.Document table:
+| DocumentNode = '/4/0/', Title = 'Test',
+| Owner = BusinessEntityID FROM HumanResources.Employee (from Setup),
+| FileName = 'Test',
+| FileExtension = '.doc',
+| Revision = 0, Status = 0
+| 3. Get the 'ChangeNumber' and 'FolderFlag' from inserted row.
+|
+| Expected results:
+| 1. 'ChangeNumber' = 0
+| 2. 'FolderFlag' = False
+|
+| Test teardown: delete row that was inserted on step 1.</doc>
+<tag>AUTO 2.2, Production,Production.Document</tag>
+<status status="PASS" starttime="20211114 11:40:20.757" endtime="20211114 11:40:20.762"/>
+</test>
+<test id="s1-t5" name="Checking that Production.UnitMeasure satisfies Primary Key constraint">
+<kw name="Query" library="DatabaseLibrary">
+<var>@{results}</var>
+<arg>SELECT COUNT (DISTINCT(UnitMeasureCode)), COUNT(*) from Production.UnitMeasure</arg>
+<doc>Uses the input `selectStatement` to query for the values that will be returned as a list of tuples. Set optional
+input `sansTran` to True to run command without an explicit transaction commit or rollback.
+Set optional input `returnAsDict` to True to return values as a list of dictionaries.</doc>
+<msg timestamp="20211114 11:40:20.763" level="INFO">Executing : Query  |  SELECT COUNT (DISTINCT(UnitMeasureCode)), COUNT(*) from Production.UnitMeasure </msg>
+<msg timestamp="20211114 11:40:20.763" level="INFO">@{results} = [ (38, 38) ]</msg>
+<status status="PASS" starttime="20211114 11:40:20.763" endtime="20211114 11:40:20.763"/>
+</kw>
+<kw name="Should Be Equal As Integers" library="BuiltIn">
+<arg>${results[0][0]}</arg>
+<arg>${results[0][1]}</arg>
+<doc>Fails if objects are unequal after converting them to integers.</doc>
+<status status="PASS" starttime="20211114 11:40:20.764" endtime="20211114 11:40:20.764"/>
+</kw>
+<doc>Checking that column 'UnitMeasureCode' in Production.UnitMeasure table
+| satisfies Primary Key constraint, i.e. has only not-null unique values
+|
+| * Test Steps *
+| 1. Get number of unique not-null values in 'UnitMeasureCode' column
+| 2. Get total number of rows in Production.UnitMeasure table
+|
+| * Expected results *
+| 1. Total number of records in Production.UnitMeasure table is equal to number
+| of distinct not-null values in 'UnitMeasureCode' column</doc>
+<tag>AUTO-3.1, Production, Production.UnitMeasure</tag>
+<status status="PASS" starttime="20211114 11:40:20.762" endtime="20211114 11:40:20.765"/>
+</test>
+<test id="s1-t6" name="Checking that all values from source file are ingested to column 'UnitMeasureCode' in Production.UnitMeasure table">
+<kw name="Get File" library="OperatingSystem">
+<var>${content}</var>
+<arg>${UNIT_MEASURE_SOURCE_FILE_PATH}</arg>
+<doc>Returns the contents of a specified file.</doc>
+<msg timestamp="20211114 11:40:20.766" level="INFO" html="true">Getting file '&lt;a href="file://C:\Users\Viktoriia_Vakhrina\PycharmProjects\RF_task\resources\UnitMeasureCodeValues.txt"&gt;C:\Users\Viktoriia_Vakhrina\PycharmProjects\RF_task\resources\UnitMeasureCodeValues.txt&lt;/a&gt;'.</msg>
+<msg timestamp="20211114 11:40:20.766" level="INFO">${content} = BOX
+BTL
+C  
+CAN
+CAR
+CBM
+CCM
+CDM
+CM 
+CM2
+CR 
+CS 
+CTN
+DM 
+DZ 
+EA 
+FT3
+G  
+GAL
+IN 
+KG 
+KGV
+KM 
+KT 
+L  
+LB 
+M  
+M2 
+M3 
+MG 
+ML 
+MM 
+OZ 
+PAK
+PAL
+PC 
+PCT
+PT </msg>
+<status status="PASS" starttime="20211114 11:40:20.765" endtime="20211114 11:40:20.766"/>
+</kw>
+<kw name="Split To Lines" library="String">
+<var>@{lines}</var>
+<arg>${content}</arg>
+<doc>Splits the given string to lines.</doc>
+<msg timestamp="20211114 11:40:20.766" level="INFO">38 lines returned</msg>
+<msg timestamp="20211114 11:40:20.767" level="INFO">@{lines} = [ BOX | BTL | C   | CAN | CAR | CBM | CCM | CDM | CM  | CM2 | CR  | CS  | CTN | DM  | DZ  | EA  | FT3 | G   | GAL | IN  | KG  | KGV | KM  | KT  | L   | LB  | M   | M2  | M3  | MG  | ML  | MM  | OZ  | ...</msg>
+<status status="PASS" starttime="20211114 11:40:20.766" endtime="20211114 11:40:20.767"/>
+</kw>
+<kw name="Query" library="DatabaseLibrary">
+<var>@{result_codes}</var>
+<arg>SELECT UnitMeasureCode FROM Production.UnitMeasure</arg>
+<doc>Uses the input `selectStatement` to query for the values that will be returned as a list of tuples. Set optional
+input `sansTran` to True to run command without an explicit transaction commit or rollback.
+Set optional input `returnAsDict` to True to return values as a list of dictionaries.</doc>
+<msg timestamp="20211114 11:40:20.767" level="INFO">Executing : Query  |  SELECT UnitMeasureCode FROM Production.UnitMeasure </msg>
+<msg timestamp="20211114 11:40:20.767" level="INFO">@{result_codes} = [ ('BTL', ) | ('BOX', ) | ('CAN', ) | ('CAR', ) | ('CS ', ) | ('C  ', ) | ('CM ', ) | ('CTN', ) | ('CR ', ) | ('CCM', ) | ('CDM', ) | ('FT3', ) | ('M3 ', ) | ('CBM', ) | ('DM ', ) | ('DZ ', ) | ('EA '...</msg>
+<status status="PASS" starttime="20211114 11:40:20.767" endtime="20211114 11:40:20.767"/>
+</kw>
+<for flavor="IN">
+<var>${code}</var>
+<value>@{result_codes}</value>
+<iter>
+<var name="${code}">('BTL', )</var>
+<kw name="List Should Contain Value" library="Collections">
+<arg>${lines}</arg>
+<arg>${code[0]}</arg>
+<doc>Fails if the ``value`` is not found from ``list``.</doc>
+<status status="PASS" starttime="20211114 11:40:20.768" endtime="20211114 11:40:20.768"/>
+</kw>
+<status status="PASS" starttime="20211114 11:40:20.768" endtime="20211114 11:40:20.768"/>
+</iter>
+<iter>
+<var name="${code}">('BOX', )</var>
+<kw name="List Should Contain Value" library="Collections">
+<arg>${lines}</arg>
+<arg>${code[0]}</arg>
+<doc>Fails if the ``value`` is not found from ``list``.</doc>
+<status status="PASS" starttime="20211114 11:40:20.768" endtime="20211114 11:40:20.769"/>
+</kw>
+<status status="PASS" starttime="20211114 11:40:20.768" endtime="20211114 11:40:20.769"/>
+</iter>
+<iter>
+<var name="${code}">('CAN', )</var>
+<kw name="List Should Contain Value" library="Collections">
+<arg>${lines}</arg>
+<arg>${code[0]}</arg>
+<doc>Fails if the ``value`` is not found from ``list``.</doc>
+<status status="PASS" starttime="20211114 11:40:20.769" endtime="20211114 11:40:20.770"/>
+</kw>
+<status status="PASS" starttime="20211114 11:40:20.769" endtime="20211114 11:40:20.770"/>
+</iter>
+<iter>
+<var name="${code}">('CAR', )</var>
+<kw name="List Should Contain Value" library="Collections">
+<arg>${lines}</arg>
+<arg>${code[0]}</arg>
+<doc>Fails if the ``value`` is not found from ``list``.</doc>
+<status status="PASS" starttime="20211114 11:40:20.770" endtime="20211114 11:40:20.770"/>
+</kw>
+<status status="PASS" starttime="20211114 11:40:20.770" endtime="20211114 11:40:20.770"/>
+</iter>
+<iter>
+<var name="${code}">('CS ', )</var>
+<kw name="List Should Contain Value" library="Collections">
+<arg>${lines}</arg>
+<arg>${code[0]}</arg>
+<doc>Fails if the ``value`` is not found from ``list``.</doc>
+<status status="PASS" starttime="20211114 11:40:20.770" endtime="20211114 11:40:20.771"/>
+</kw>
+<status status="PASS" starttime="20211114 11:40:20.770" endtime="20211114 11:40:20.771"/>
+</iter>
+<iter>
+<var name="${code}">('C  ', )</var>
+<kw name="List Should Contain Value" library="Collections">
+<arg>${lines}</arg>
+<arg>${code[0]}</arg>
+<doc>Fails if the ``value`` is not found from ``list``.</doc>
+<status status="PASS" starttime="20211114 11:40:20.771" endtime="20211114 11:40:20.772"/>
+</kw>
+<status status="PASS" starttime="20211114 11:40:20.771" endtime="20211114 11:40:20.772"/>
+</iter>
+<iter>
+<var name="${code}">('CM ', )</var>
+<kw name="List Should Contain Value" library="Collections">
+<arg>${lines}</arg>
+<arg>${code[0]}</arg>
+<doc>Fails if the ``value`` is not found from ``list``.</doc>
+<status status="PASS" starttime="20211114 11:40:20.772" endtime="20211114 11:40:20.772"/>
+</kw>
+<status status="PASS" starttime="20211114 11:40:20.772" endtime="20211114 11:40:20.772"/>
+</iter>
+<iter>
+<var name="${code}">('CTN', )</var>
+<kw name="List Should Contain Value" library="Collections">
+<arg>${lines}</arg>
+<arg>${code[0]}</arg>
+<doc>Fails if the ``value`` is not found from ``list``.</doc>
+<status status="PASS" starttime="20211114 11:40:20.772" endtime="20211114 11:40:20.773"/>
+</kw>
+<status status="PASS" starttime="20211114 11:40:20.772" endtime="20211114 11:40:20.773"/>
+</iter>
+<iter>
+<var name="${code}">('CR ', )</var>
+<kw name="List Should Contain Value" library="Collections">
+<arg>${lines}</arg>
+<arg>${code[0]}</arg>
+<doc>Fails if the ``value`` is not found from ``list``.</doc>
+<status status="PASS" starttime="20211114 11:40:20.773" endtime="20211114 11:40:20.774"/>
+</kw>
+<status status="PASS" starttime="20211114 11:40:20.773" endtime="20211114 11:40:20.774"/>
+</iter>
+<iter>
+<var name="${code}">('CCM', )</var>
+<kw name="List Should Contain Value" library="Collections">
+<arg>${lines}</arg>
+<arg>${code[0]}</arg>
+<doc>Fails if the ``value`` is not found from ``list``.</doc>
+<status status="PASS" starttime="20211114 11:40:20.774" endtime="20211114 11:40:20.774"/>
+</kw>
+<status status="PASS" starttime="20211114 11:40:20.774" endtime="20211114 11:40:20.774"/>
+</iter>
+<iter>
+<var name="${code}">('CDM', )</var>
+<kw name="List Should Contain Value" library="Collections">
+<arg>${lines}</arg>
+<arg>${code[0]}</arg>
+<doc>Fails if the ``value`` is not found from ``list``.</doc>
+<status status="PASS" starttime="20211114 11:40:20.775" endtime="20211114 11:40:20.775"/>
+</kw>
+<status status="PASS" starttime="20211114 11:40:20.775" endtime="20211114 11:40:20.775"/>
+</iter>
+<iter>
+<var name="${code}">('FT3', )</var>
+<kw name="List Should Contain Value" library="Collections">
+<arg>${lines}</arg>
+<arg>${code[0]}</arg>
+<doc>Fails if the ``value`` is not found from ``list``.</doc>
+<status status="PASS" starttime="20211114 11:40:20.775" endtime="20211114 11:40:20.776"/>
+</kw>
+<status status="PASS" starttime="20211114 11:40:20.775" endtime="20211114 11:40:20.776"/>
+</iter>
+<iter>
+<var name="${code}">('M3 ', )</var>
+<kw name="List Should Contain Value" library="Collections">
+<arg>${lines}</arg>
+<arg>${code[0]}</arg>
+<doc>Fails if the ``value`` is not found from ``list``.</doc>
+<status status="PASS" starttime="20211114 11:40:20.776" endtime="20211114 11:40:20.777"/>
+</kw>
+<status status="PASS" starttime="20211114 11:40:20.776" endtime="20211114 11:40:20.777"/>
+</iter>
+<iter>
+<var name="${code}">('CBM', )</var>
+<kw name="List Should Contain Value" library="Collections">
+<arg>${lines}</arg>
+<arg>${code[0]}</arg>
+<doc>Fails if the ``value`` is not found from ``list``.</doc>
+<status status="PASS" starttime="20211114 11:40:20.777" endtime="20211114 11:40:20.777"/>
+</kw>
+<status status="PASS" starttime="20211114 11:40:20.777" endtime="20211114 11:40:20.777"/>
+</iter>
+<iter>
+<var name="${code}">('DM ', )</var>
+<kw name="List Should Contain Value" library="Collections">
+<arg>${lines}</arg>
+<arg>${code[0]}</arg>
+<doc>Fails if the ``value`` is not found from ``list``.</doc>
+<status status="PASS" starttime="20211114 11:40:20.778" endtime="20211114 11:40:20.778"/>
+</kw>
+<status status="PASS" starttime="20211114 11:40:20.777" endtime="20211114 11:40:20.778"/>
+</iter>
+<iter>
+<var name="${code}">('DZ ', )</var>
+<kw name="List Should Contain Value" library="Collections">
+<arg>${lines}</arg>
+<arg>${code[0]}</arg>
+<doc>Fails if the ``value`` is not found from ``list``.</doc>
+<status status="PASS" starttime="20211114 11:40:20.778" endtime="20211114 11:40:20.779"/>
+</kw>
+<status status="PASS" starttime="20211114 11:40:20.778" endtime="20211114 11:40:20.779"/>
+</iter>
+<iter>
+<var name="${code}">('EA ', )</var>
+<kw name="List Should Contain Value" library="Collections">
+<arg>${lines}</arg>
+<arg>${code[0]}</arg>
+<doc>Fails if the ``value`` is not found from ``list``.</doc>
+<status status="PASS" starttime="20211114 11:40:20.779" endtime="20211114 11:40:20.779"/>
+</kw>
+<status status="PASS" starttime="20211114 11:40:20.779" endtime="20211114 11:40:20.779"/>
+</iter>
+<iter>
+<var name="${code}">('GAL', )</var>
+<kw name="List Should Contain Value" library="Collections">
+<arg>${lines}</arg>
+<arg>${code[0]}</arg>
+<doc>Fails if the ``value`` is not found from ``list``.</doc>
+<status status="PASS" starttime="20211114 11:40:20.780" endtime="20211114 11:40:20.780"/>
+</kw>
+<status status="PASS" starttime="20211114 11:40:20.780" endtime="20211114 11:40:20.780"/>
+</iter>
+<iter>
+<var name="${code}">('G  ', )</var>
+<kw name="List Should Contain Value" library="Collections">
+<arg>${lines}</arg>
+<arg>${code[0]}</arg>
+<doc>Fails if the ``value`` is not found from ``list``.</doc>
+<status status="PASS" starttime="20211114 11:40:20.780" endtime="20211114 11:40:20.781"/>
+</kw>
+<status status="PASS" starttime="20211114 11:40:20.780" endtime="20211114 11:40:20.781"/>
+</iter>
+<iter>
+<var name="${code}">('IN ', )</var>
+<kw name="List Should Contain Value" library="Collections">
+<arg>${lines}</arg>
+<arg>${code[0]}</arg>
+<doc>Fails if the ``value`` is not found from ``list``.</doc>
+<status status="PASS" starttime="20211114 11:40:20.781" endtime="20211114 11:40:20.782"/>
+</kw>
+<status status="PASS" starttime="20211114 11:40:20.781" endtime="20211114 11:40:20.782"/>
+</iter>
+<iter>
+<var name="${code}">('KG ', )</var>
+<kw name="List Should Contain Value" library="Collections">
+<arg>${lines}</arg>
+<arg>${code[0]}</arg>
+<doc>Fails if the ``value`` is not found from ``list``.</doc>
+<status status="PASS" starttime="20211114 11:40:20.782" endtime="20211114 11:40:20.782"/>
+</kw>
+<status status="PASS" starttime="20211114 11:40:20.782" endtime="20211114 11:40:20.782"/>
+</iter>
+<iter>
+<var name="${code}">('KGV', )</var>
+<kw name="List Should Contain Value" library="Collections">
+<arg>${lines}</arg>
+<arg>${code[0]}</arg>
+<doc>Fails if the ``value`` is not found from ``list``.</doc>
+<status status="PASS" starttime="20211114 11:40:20.782" endtime="20211114 11:40:20.783"/>
+</kw>
+<status status="PASS" starttime="20211114 11:40:20.782" endtime="20211114 11:40:20.783"/>
+</iter>
+<iter>
+<var name="${code}">('KM ', )</var>
+<kw name="List Should Contain Value" library="Collections">
+<arg>${lines}</arg>
+<arg>${code[0]}</arg>
+<doc>Fails if the ``value`` is not found from ``list``.</doc>
+<status status="PASS" starttime="20211114 11:40:20.783" endtime="20211114 11:40:20.784"/>
+</kw>
+<status status="PASS" starttime="20211114 11:40:20.783" endtime="20211114 11:40:20.784"/>
+</iter>
+<iter>
+<var name="${code}">('KT ', )</var>
+<kw name="List Should Contain Value" library="Collections">
+<arg>${lines}</arg>
+<arg>${code[0]}</arg>
+<doc>Fails if the ``value`` is not found from ``list``.</doc>
+<status status="PASS" starttime="20211114 11:40:20.784" endtime="20211114 11:40:20.784"/>
+</kw>
+<status status="PASS" starttime="20211114 11:40:20.784" endtime="20211114 11:40:20.784"/>
+</iter>
+<iter>
+<var name="${code}">('L  ', )</var>
+<kw name="List Should Contain Value" library="Collections">
+<arg>${lines}</arg>
+<arg>${code[0]}</arg>
+<doc>Fails if the ``value`` is not found from ``list``.</doc>
+<status status="PASS" starttime="20211114 11:40:20.784" endtime="20211114 11:40:20.785"/>
+</kw>
+<status status="PASS" starttime="20211114 11:40:20.784" endtime="20211114 11:40:20.785"/>
+</iter>
+<iter>
+<var name="${code}">('M  ', )</var>
+<kw name="List Should Contain Value" library="Collections">
+<arg>${lines}</arg>
+<arg>${code[0]}</arg>
+<doc>Fails if the ``value`` is not found from ``list``.</doc>
+<status status="PASS" starttime="20211114 11:40:20.785" endtime="20211114 11:40:20.786"/>
+</kw>
+<status status="PASS" starttime="20211114 11:40:20.785" endtime="20211114 11:40:20.786"/>
+</iter>
+<iter>
+<var name="${code}">('MG ', )</var>
+<kw name="List Should Contain Value" library="Collections">
+<arg>${lines}</arg>
+<arg>${code[0]}</arg>
+<doc>Fails if the ``value`` is not found from ``list``.</doc>
+<status status="PASS" starttime="20211114 11:40:20.786" endtime="20211114 11:40:20.786"/>
+</kw>
+<status status="PASS" starttime="20211114 11:40:20.786" endtime="20211114 11:40:20.786"/>
+</iter>
+<iter>
+<var name="${code}">('ML ', )</var>
+<kw name="List Should Contain Value" library="Collections">
+<arg>${lines}</arg>
+<arg>${code[0]}</arg>
+<doc>Fails if the ``value`` is not found from ``list``.</doc>
+<status status="PASS" starttime="20211114 11:40:20.787" endtime="20211114 11:40:20.787"/>
+</kw>
+<status status="PASS" starttime="20211114 11:40:20.787" endtime="20211114 11:40:20.787"/>
+</iter>
+<iter>
+<var name="${code}">('MM ', )</var>
+<kw name="List Should Contain Value" library="Collections">
+<arg>${lines}</arg>
+<arg>${code[0]}</arg>
+<doc>Fails if the ``value`` is not found from ``list``.</doc>
+<status status="PASS" starttime="20211114 11:40:20.787" endtime="20211114 11:40:20.788"/>
+</kw>
+<status status="PASS" starttime="20211114 11:40:20.787" endtime="20211114 11:40:20.788"/>
+</iter>
+<iter>
+<var name="${code}">('OZ ', )</var>
+<kw name="List Should Contain Value" library="Collections">
+<arg>${lines}</arg>
+<arg>${code[0]}</arg>
+<doc>Fails if the ``value`` is not found from ``list``.</doc>
+<status status="PASS" starttime="20211114 11:40:20.788" endtime="20211114 11:40:20.788"/>
+</kw>
+<status status="PASS" starttime="20211114 11:40:20.788" endtime="20211114 11:40:20.789"/>
+</iter>
+<iter>
+<var name="${code}">('PAK', )</var>
+<kw name="List Should Contain Value" library="Collections">
+<arg>${lines}</arg>
+<arg>${code[0]}</arg>
+<doc>Fails if the ``value`` is not found from ``list``.</doc>
+<status status="PASS" starttime="20211114 11:40:20.789" endtime="20211114 11:40:20.789"/>
+</kw>
+<status status="PASS" starttime="20211114 11:40:20.789" endtime="20211114 11:40:20.789"/>
+</iter>
+<iter>
+<var name="${code}">('PAL', )</var>
+<kw name="List Should Contain Value" library="Collections">
+<arg>${lines}</arg>
+<arg>${code[0]}</arg>
+<doc>Fails if the ``value`` is not found from ``list``.</doc>
+<status status="PASS" starttime="20211114 11:40:20.790" endtime="20211114 11:40:20.790"/>
+</kw>
+<status status="PASS" starttime="20211114 11:40:20.789" endtime="20211114 11:40:20.790"/>
+</iter>
+<iter>
+<var name="${code}">('PCT', )</var>
+<kw name="List Should Contain Value" library="Collections">
+<arg>${lines}</arg>
+<arg>${code[0]}</arg>
+<doc>Fails if the ``value`` is not found from ``list``.</doc>
+<status status="PASS" starttime="20211114 11:40:20.790" endtime="20211114 11:40:20.791"/>
+</kw>
+<status status="PASS" starttime="20211114 11:40:20.790" endtime="20211114 11:40:20.791"/>
+</iter>
+<iter>
+<var name="${code}">('PC ', )</var>
+<kw name="List Should Contain Value" library="Collections">
+<arg>${lines}</arg>
+<arg>${code[0]}</arg>
+<doc>Fails if the ``value`` is not found from ``list``.</doc>
+<status status="PASS" starttime="20211114 11:40:20.791" endtime="20211114 11:40:20.792"/>
+</kw>
+<status status="PASS" starttime="20211114 11:40:20.791" endtime="20211114 11:40:20.792"/>
+</iter>
+<iter>
+<var name="${code}">('PT ', )</var>
+<kw name="List Should Contain Value" library="Collections">
+<arg>${lines}</arg>
+<arg>${code[0]}</arg>
+<doc>Fails if the ``value`` is not found from ``list``.</doc>
+<status status="PASS" starttime="20211114 11:40:20.792" endtime="20211114 11:40:20.792"/>
+</kw>
+<status status="PASS" starttime="20211114 11:40:20.792" endtime="20211114 11:40:20.792"/>
+</iter>
+<iter>
+<var name="${code}">('CM2', )</var>
+<kw name="List Should Contain Value" library="Collections">
+<arg>${lines}</arg>
+<arg>${code[0]}</arg>
+<doc>Fails if the ``value`` is not found from ``list``.</doc>
+<status status="PASS" starttime="20211114 11:40:20.792" endtime="20211114 11:40:20.793"/>
+</kw>
+<status status="PASS" starttime="20211114 11:40:20.792" endtime="20211114 11:40:20.793"/>
+</iter>
+<iter>
+<var name="${code}">('M2 ', )</var>
+<kw name="List Should Contain Value" library="Collections">
+<arg>${lines}</arg>
+<arg>${code[0]}</arg>
+<doc>Fails if the ``value`` is not found from ``list``.</doc>
+<status status="PASS" starttime="20211114 11:40:20.793" endtime="20211114 11:40:20.794"/>
+</kw>
+<status status="PASS" starttime="20211114 11:40:20.793" endtime="20211114 11:40:20.794"/>
+</iter>
+<iter>
+<var name="${code}">('LB ', )</var>
+<kw name="List Should Contain Value" library="Collections">
+<arg>${lines}</arg>
+<arg>${code[0]}</arg>
+<doc>Fails if the ``value`` is not found from ``list``.</doc>
+<status status="PASS" starttime="20211114 11:40:20.794" endtime="20211114 11:40:20.794"/>
+</kw>
+<status status="PASS" starttime="20211114 11:40:20.794" endtime="20211114 11:40:20.794"/>
+</iter>
+<status status="PASS" starttime="20211114 11:40:20.767" endtime="20211114 11:40:20.794"/>
+</for>
+<doc>Checking that all values from source file were ingested into Production.UnitMeasure table,
+| 'UnitMeasureCode'column . The path to source file can be changed in variables.py file
+|
+| * Test Steps *
+| 1. Load data from file located in path that is defined by UNIT_MEASURE_SOURCE_FILE_PATH varialbe
+| in variables.py file
+| 2. Split the data obtained from file to get list of values.
+| 3. Get values of UnitMeasureCode column from Production.UnitMeasure
+| 4. For each value of UnitMeasureCode check if it exists in list of values from file
+|
+| * Expected result *
+| 1. All values from the file are present in UnitMeasureCode column of Production.UnitMeasure table</doc>
+<tag>AUTO-3.2, Production, Production.UnitMeasure</tag>
+<status status="PASS" starttime="20211114 11:40:20.765" endtime="20211114 11:40:20.795"/>
+</test>
+<kw name="Delete user and disconnect" library="common_keywords" type="TEARDOWN">
+<doc>Delete user and login created for tests
+| 1. Log out from user for tests.
+| 2. Log in using primary credentials
+| 3. Delete user and login created for tests
+| 4. Disconnect from database</doc>
+<kw name="Disconnect From Database" library="DatabaseLibrary">
+<doc>Disconnects from the database.</doc>
+<msg timestamp="20211114 11:40:20.796" level="INFO">Executing : Disconnect From Database</msg>
+<status status="PASS" starttime="20211114 11:40:20.796" endtime="20211114 11:40:20.797"/>
+</kw>
+<kw name="Run And Return Rc And Output" library="OperatingSystem">
+<var>${rc}</var>
+<var>${output}</var>
+<arg>NET STOP MSSQLSERVER</arg>
+<doc>Runs the given command in the system and returns the RC and output.</doc>
+<msg timestamp="20211114 11:40:20.799" level="INFO">Running command 'NET STOP MSSQLSERVER 2&gt;&amp;1'.</msg>
+<msg timestamp="20211114 11:40:20.824" level="INFO">${rc} = 2</msg>
+<msg timestamp="20211114 11:40:20.824" level="INFO">${output} = System error 5 has occurred.
+
+Access is denied.
+</msg>
+<status status="PASS" starttime="20211114 11:40:20.797" endtime="20211114 11:40:20.824"/>
+</kw>
+<kw name="Log To Console" library="BuiltIn">
+<arg>${rc}</arg>
+<arg>${output}</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" starttime="20211114 11:40:20.824" endtime="20211114 11:40:20.824"/>
+</kw>
+<kw name="Run And Return Rc And Output" library="OperatingSystem">
+<var>${rc2}</var>
+<var>${output2}</var>
+<arg>NET START MSSQLSERVER</arg>
+<doc>Runs the given command in the system and returns the RC and output.</doc>
+<msg timestamp="20211114 11:40:20.827" level="INFO">Running command 'NET START MSSQLSERVER 2&gt;&amp;1'.</msg>
+<msg timestamp="20211114 11:40:20.847" level="INFO">${rc2} = 2</msg>
+<msg timestamp="20211114 11:40:20.847" level="INFO">${output2} = System error 5 has occurred.
+
+Access is denied.
+</msg>
+<status status="PASS" starttime="20211114 11:40:20.824" endtime="20211114 11:40:20.847"/>
+</kw>
+<kw name="Log To Console" library="BuiltIn">
+<arg>${rc2}</arg>
+<arg>${output2}</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" starttime="20211114 11:40:20.847" endtime="20211114 11:40:20.848"/>
+</kw>
+<kw name="Connect To Database Using Custom Params" library="DatabaseLibrary">
+<arg>pyodbc</arg>
+<arg>${CONNECTION_STRING}</arg>
+<doc>Loads the DB API 2.0 module given `dbapiModuleName` then uses it to
+connect to the database using the map string `db_custom_param_string`.</doc>
+<msg timestamp="20211114 11:40:20.848" level="INFO">Executing : Connect To Database Using Custom Params : pyodbc.connect(db_api_2.connect(Driver='{ODBC Driver 17 for SQL Server}',Server='localhost',Database='AdventureWorks2012',Trusted_Connection='yes',UID='',PWD='')) </msg>
+<status status="PASS" starttime="20211114 11:40:20.848" endtime="20211114 11:40:20.849"/>
+</kw>
+<kw name="Log To Console" library="BuiltIn">
+<arg>${CONNECTION_STRING}</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" starttime="20211114 11:40:20.849" endtime="20211114 11:40:20.849"/>
+</kw>
+<kw name="Execute Sql String" library="DatabaseLibrary">
+<arg>DROP USER IF EXISTS ${TEST_USER_NAME}</arg>
+<doc>Executes the sqlString as SQL commands. Useful to pass arguments to your sql. Set optional input `sansTran` to
+True to run command without an explicit transaction commit or rollback.</doc>
+<msg timestamp="20211114 11:40:20.849" level="INFO">Executing : Execute SQL String  |  DROP USER IF EXISTS TestUser13 </msg>
+<status status="PASS" starttime="20211114 11:40:20.849" endtime="20211114 11:40:20.850"/>
+</kw>
+<kw name="Run" library="OperatingSystem">
+<arg>NET STOP MSSQLSERVER</arg>
+<doc>Runs the given command in the system and returns the output.</doc>
+<msg timestamp="20211114 11:40:20.853" level="INFO">Running command 'NET STOP MSSQLSERVER 2&gt;&amp;1'.</msg>
+<status status="PASS" starttime="20211114 11:40:20.850" endtime="20211114 11:40:20.872"/>
+</kw>
+<kw name="Run" library="OperatingSystem">
+<arg>NET START MSSQLSERVER</arg>
+<doc>Runs the given command in the system and returns the output.</doc>
+<msg timestamp="20211114 11:40:20.875" level="INFO">Running command 'NET START MSSQLSERVER 2&gt;&amp;1'.</msg>
+<status status="PASS" starttime="20211114 11:40:20.873" endtime="20211114 11:40:20.894"/>
+</kw>
+<kw name="Execute Sql String" library="DatabaseLibrary">
+<arg>DROP LOGIN ${TEST_LOGIN}</arg>
+<doc>Executes the sqlString as SQL commands. Useful to pass arguments to your sql. Set optional input `sansTran` to
+True to run command without an explicit transaction commit or rollback.</doc>
+<msg timestamp="20211114 11:40:20.894" level="INFO">Executing : Execute SQL String  |  DROP LOGIN TestLogin13 </msg>
+<msg timestamp="20211114 11:40:20.895" level="FAIL">ProgrammingError: ('42000', "[42000] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Could not drop login 'TestLogin13' as the user is currently logged in. (15434) (SQLExecDirectW)")</msg>
+<status status="FAIL" starttime="20211114 11:40:20.894" endtime="20211114 11:40:20.896"/>
+</kw>
+<kw name="Disconnect From Database" library="DatabaseLibrary">
+<doc>Disconnects from the database.</doc>
+<msg timestamp="20211114 11:40:20.896" level="INFO">Executing : Disconnect From Database</msg>
+<status status="PASS" starttime="20211114 11:40:20.896" endtime="20211114 11:40:20.896"/>
+</kw>
+<status status="FAIL" starttime="20211114 11:40:20.796" endtime="20211114 11:40:20.896">ProgrammingError: ('42000', "[42000] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Could not drop login 'TestLogin13' as the user is currently logged in. (15434) (SQLExecDirectW)")</status>
+</kw>
+<doc>Contains Data Quality constraints.</doc>
+<status status="FAIL" starttime="20211114 11:40:20.538" endtime="20211114 11:40:20.896">Suite teardown failed:
+ProgrammingError: ('42000', "[42000] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Could not drop login 'TestLogin13' as the user is currently logged in. (15434) (SQLExecDirectW)")</status>
+</suite>
+<statistics>
+<total>
+<stat pass="0" fail="6" skip="0">All Tests</stat>
+</total>
+<tag>
+<stat pass="0" fail="1" skip="0">AUTO-1.1, Person, Person.Address</stat>
+<stat pass="0" fail="1" skip="0">AUTO-1.2, Person, Person.Address</stat>
+<stat pass="0" fail="1" skip="0">AUTO-3.1, Production, Production.UnitMeasure</stat>
+<stat pass="0" fail="1" skip="0">AUTO-3.2, Production, Production.UnitMeasure</stat>
+<stat pass="0" fail="1" skip="0">AUTO 2.1, Production, Production.Document</stat>
+<stat pass="0" fail="1" skip="0">AUTO 2.2, Production,Production.Document</stat>
+</tag>
+<suite>
+<stat pass="0" fail="6" skip="0" id="s1" name="Tests">Tests</stat>
+</suite>
+</statistics>
+<errors>
+</errors>
+</robot>
