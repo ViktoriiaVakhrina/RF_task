@@ -2,9 +2,9 @@ pipeline {
    agent any
 
    stages {
-      stage('Venv') {
+      stage("Venv") {
         steps {
-		  python venv venv
+		  sh 'python venv venv'
           sh 'venv/Scripts/activate'
 		  sh 'pip install -r requirements.txt'
 		  echo 'venv activated'
