@@ -5,7 +5,7 @@ pipeline {
       stage('Venv') {
         steps {
 		sh 'pwd'
-			sh 'python --version'
+		python --version
           sh 'venv/Scripts/activate'
 		  sh 'pip install -r requirements.txt'
 		  echo 'venv activated'
