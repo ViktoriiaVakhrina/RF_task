@@ -6,7 +6,7 @@ pipeline {
         steps {
           sh 'venv/Scripts/activate'
 		  sh 'pip install -r requirements.txt'
-		  echo venv activated
+		  echo 'venv activated'
         }
       }
       stage('Go') {
