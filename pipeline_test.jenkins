@@ -5,6 +5,7 @@ pipeline {
       stage('Env') {
         steps{      
          withPythonEnv('python3') {
+			echo 'After push'
 			sh 'pip install -r requirements.txt'
 			sh 'robot Tests/tests.robot'
 		}
